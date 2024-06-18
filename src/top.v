@@ -6,7 +6,7 @@
 //`include "ovf_detect.v"
 
 module top(input clk, ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11, ch12, ch13, ch14, ch15, reset,RTC,
-           output wire serial_out, ovf_global, ovf_RTC_out, a0_out, a1_out, a2_out, a3_out, SL_out, ovf_ch_out
+           output wire serial_out, ovf_global, ovf_RTC_out, a0_out, a1_out, a2_out, a3_out, SL_out
            );
 
   wire [3:0] counter_register;
@@ -16,7 +16,9 @@ module top(input clk, ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11, c
   wire ovf1, ovf2, ovf3, ovf4, ovf5,ovf6,ovf7,ovf8,ovf9,ovf10,ovf11,ovf12,ovf13,ovf14,ovf15,ovf_RTC;
   wire [11:0] mux_data_out;
   wire SL;
-  wire out_rst;
+  wire out_rst; 
+  wire  ovf_ch_out;
+
   
   assign ovf_RTC_out = ovf_RTC;
   assign ovf_ch_out = ovf1||ovf2||ovf3||ovf4||ovf5||ovf6||ovf7||ovf8||ovf9||ovf10||ovf11||ovf12||ovf13||ovf14||ovf15;
