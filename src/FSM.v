@@ -406,6 +406,11 @@ end
 
       default : begin
         state_next = s0;
+	rst = 0;
+	SL = 0;
+	counter_increment = 0;
+	counter_reset = 0;
+	selection_bits = 4'b0000;
       end
     endcase
 end 
