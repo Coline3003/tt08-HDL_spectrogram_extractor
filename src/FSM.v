@@ -86,7 +86,10 @@ end
 
 // State Machine
   always @(*) begin 
-
+		rst = 0;
+		counter_increment = 0;
+		counter_reset = 0;
+		selection_bits = 4'b0000;
     case (state_reg)
         s0 : begin
 		rst = 0;
