@@ -22,7 +22,7 @@ module mux_16to1(input wire [11:0] data0, data1, data2, data3, data4, data5, dat
       4'b1101 : data_out = data13;
       4'b1110 : data_out = data14;
       4'b1111 : data_out = data15;
-      default :  data_out = 1'b0;
+      default :  data_out = 12'b0;
      endcase  
    end  
   
