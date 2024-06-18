@@ -1,8 +1,3 @@
-/*
-A clock divider in Verilog, using the cascading
-flip-flop method.
-*/
-
 module FSM(input clk, input reset, input wire ovf, output wire [3:0] selection, output SL_out, output reg rst , output reg [3:0] counter_register/* synthesis syn_preserve=1 */);
 
  
@@ -38,7 +33,7 @@ end
   s16 = 16,
   s17 = 17; 
 
-  reg[5:0] state_reg, state_next/* synthesis syn_preserve=1 */;
+	reg[4:0] state_reg, state_next/* synthesis syn_preserve=1 */;
 
  
 // Internal counter process
@@ -76,341 +71,341 @@ end
 
 // State Machine
   always @(*) begin 
-    state_next <= state_reg; // default state_next
+    state_next = state_reg; // default state_next
     case (state_reg)
         s0 : begin
-		rst <= 0;
-		SL <= 0;
-		counter_increment <= 0;
-		counter_reset <= 0;
-		selection_bits <= 4'b0000;
+		rst = 0;
+		SL = 0;
+		counter_increment = 0;
+		counter_reset = 0;
+		selection_bits = 4'b0000;
 		
           	if (ovf == 1) begin  
-                	state_next <= s1; 
+                	state_next = s1; 
             	end
             	else begin 
-                	state_next <= s0; 
+                	state_next = s0; 
             	end
         end
 
         s1 : begin //RTC 
 		
-		selection_bits <= 4'b0000;
-		counter_increment <= 1;
+		selection_bits = 4'b0000;
+		counter_increment = 1;
 			
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 			
 		end
 		
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s2; 
+                	state_next = s2; 
             	end
             	else begin // remain in current state
-                	state_next <= s1; 
+                	state_next = s1; 
             	end
         end
 
         s2 : begin //CH1 
 
-		selection_bits <= 4'b0001;
-		counter_increment <= 1;
+		selection_bits = 4'b0001;
+		counter_increment = 1;
 			
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 		
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s3; 
+                	state_next = s3; 
             	end
             	else begin // remain in current state
-                	state_next <= s2; 
+                	state_next = s2; 
             	end
         end
       s3 : begin //CH2 
 
-		selection_bits <= 4'b0010;
+		selection_bits = 4'b0010;
 		//SL = 1;
-		counter_increment <= 1;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s4; 
+                	state_next = s4; 
             	end
             	else begin // remain in current state
-                	state_next <= s3; 
+                	state_next = s3; 
             	end
         end
       s4 : begin //CH3 
 		
-		selection_bits <= 4'b0011;
+		selection_bits = 4'b0011;
 		//SL = 0;
-		counter_increment <= 1;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 	
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s5; 
+                	state_next = s5; 
             	end
             	else begin // remain in current state
-                	state_next <= s4; 
+                	state_next = s4; 
             	end
         end
       s5 : begin //CH4 
-		selection_bits <= 4'b0100;
+		selection_bits = 4'b0100;
 		//SL = 1;
-		counter_increment <= 1;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 	
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s6; 
+                	state_next = s6; 
             	end
             	else begin // remain in current state
-                	state_next <= s5; 
+                	state_next = s5; 
             	end
         end
 
       s6 : begin //CH5 
-		selection_bits <= 4'b0101;
-		counter_increment <= 1;
+		selection_bits = 4'b0101;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 	
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s7; 
+                	state_next = s7; 
             	end
             	else begin // remain in current state
-                	state_next <= s6; 
+                	state_next = s6; 
             	end
         end
 
       s7 : begin //CH6 
 
-		selection_bits <= 4'b0110;
-		counter_increment <= 1;
+		selection_bits = 4'b0110;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 	
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s8; 
+                	state_next = s8; 
             	end
             	else begin // remain in current state
-                	state_next <= s7; 
+                	state_next = s7; 
             	end
         end
 
       s8 : begin //CH7 
 
-		selection_bits <= 4'b0111;
-		counter_increment <= 1;
+		selection_bits = 4'b0111;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 	
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s9; 
+                	state_next = s9; 
             	end
             	else begin // remain in current state
-                	state_next <= s8; 
+                	state_next = s8; 
             	end
         end
 
       s9 : begin //CH8 
-		selection_bits <= 4'b1000;
+		selection_bits = 4'b1000;
 		//SL = 1;
-		counter_increment <= 1;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 	
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s10; 
+                	state_next = s10; 
             	end
             	else begin // remain in current state
-                	state_next <= s9; 
+                	state_next = s9; 
             	end
         end
 
       s10 : begin //CH9 
-		selection_bits <= 4'b1001;
+		selection_bits = 4'b1001;
 		//SL = 1;
-		counter_increment <= 1;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 
 		end		
 
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s11; 
+                	state_next = s11; 
             	end
             	else begin // remain in current state
-                	state_next <= s10; 
+                	state_next = s10; 
             	end
         end
 
       s11 : begin //CH10 
-		selection_bits <= 4'b1010;
+		selection_bits = 4'b1010;
 
-		counter_increment <= 1;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 	
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s12; 
+                	state_next = s12; 
             	end
             	else begin // remain in current state
-                	state_next <= s11; 
+                	state_next = s11; 
             	end
         end
 
       s12 : begin //CH11 
 
-		selection_bits <= 4'b1011;
-		counter_increment <= 1;
+		selection_bits = 4'b1011;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 	
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s13; 
+                	state_next = s13; 
             	end
             	else begin // remain in current state
-                	state_next <= s12; 
+                	state_next = s12; 
             	end
         end
 
       s13 : begin //CH12 
-		selection_bits <= 4'b1100;
-		counter_increment <= 1;
+		selection_bits = 4'b1100;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 
 	
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s14; 
+                	state_next = s14; 
             	end
             	else begin // remain in current state
-                	state_next <= s13; 
+                	state_next = s13; 
             	end
         end
 
       s14 : begin //CH13 
-		selection_bits <= 4'b1101;
+		selection_bits = 4'b1101;
 		//SL = 1;
-		counter_increment <= 1;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 
 	
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s15; 
+                	state_next = s15; 
             	end
             	else begin // remain in current state
-                	state_next <= s14; 
+                	state_next = s14; 
             	end
         end
 
       s15 : begin //CH14 
-		selection_bits <= 4'b1110;
+		selection_bits = 4'b1110;
 		//SL = 1;
-		counter_increment <= 1;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 		
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s16; 
+                	state_next = s16; 
             	end
             	else begin // remain in current state
-                	state_next <= s15; 
+                	state_next = s15; 
             	end
         end
 
       s16 : begin //CH15 
-		selection_bits <= 4'b1111;
-		counter_increment <= 1;
+		selection_bits = 4'b1111;
+		counter_increment = 1;
 		if (counter_register == 4'b0000) begin
-			SL <= 1;
+			SL = 1;
 		end
 		else begin
-			SL <= 0;
+			SL = 0;
 		end
 		
           	if (counter_register == 4'b1011) begin  
-                	state_next <= s17; 
+                	state_next = s17; 
             	end
             	else begin // remain in current state
-                	state_next <= s16; 
+                	state_next = s16; 
             	end
         end
 
       s17 : begin 
-		rst <= 1;
-		SL <= 0;
-		counter_reset <= 1;
- 		state_next <= s0; 
+		rst = 1;
+		SL = 0;
+		counter_reset = 1;
+ 		state_next = s0; 
 
         end
 
       default : begin
-        state_next <= s0;
+        state_next = s0;
       end
     endcase
 end 
