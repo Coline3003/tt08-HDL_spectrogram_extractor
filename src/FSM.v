@@ -38,7 +38,7 @@ end
   s16 = 16,
   s17 = 17; 
 
-  reg[5:0] state_reg, state_next/* synthesis syn_preserve=1 */;
+	reg[4:0] state_reg, state_next/* synthesis syn_preserve=1 */;
 
  
 // Internal counter process
@@ -74,286 +74,140 @@ end
 	end
   end
 
+  always @(*) begin
+	if(counter_register == 4'b0000 && ovf == 1) begin
+		SL = 1;
+	end
+	else begin
+		SL = 0;
+	end
+  end
+
+
 // State Machine
   always @(*) begin 
 
     case (state_reg)
         s0 : begin
 		rst = 0;
-		SL = 0;
 		counter_increment = 0;
 		counter_reset = 0;
 		selection_bits = 4'b0000;
 
         end
 
-        s1 : begin //RTC 
-			
-		if (counter_register == 4'b0000) begin
-			SL = 1;		
-			selection_bits = 4'b0000;
-			counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-			selection_bits = 4'b0000;
-			counter_increment = 1;
-			
-		end
+        s1 : begin //RTC 			
+	
+		selection_bits = 4'b0000;
+		counter_increment = 1;
 
         end
 
         s2 : begin //CH1 
 
-			
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b0001;
 		counter_increment = 1;
-
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b0001;
-		counter_increment = 1;
-
-		end
 		
 
         end
       s3 : begin //CH2 
 
-
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b0010;
-		//SL = 1;
 		counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b0010;
-		//SL = 1;
-		counter_increment = 1;
-		end
-
 
         end
       s4 : begin //CH3 
-		
 
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b0011;
-		//SL = 0;
 		counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b0011;
-		//SL = 0;
-		counter_increment = 1;
-		end
+
 
         end
       s5 : begin //CH4 
 
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b0100;
-		//SL = 1;
 		counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b0100;
-		//SL = 1;
-		counter_increment = 1;
-		end
 
         end
 
       s6 : begin //CH5 
 
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b0101;
 		counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b0101;
-		counter_increment = 1;
-		end
-	
 
         end
 
       s7 : begin //CH6 
 
-
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b0110;
 		counter_increment = 1;
-		end
-
-		else begin
-			SL = 0;
-		selection_bits = 4'b0110;
-		counter_increment = 1;
-		end
 	
 
         end
 
       s8 : begin //CH7 
 
-
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b0111;
 		counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b0111;
-		counter_increment = 1;
-		end
 
         end
 
       s9 : begin //CH8 
 
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b1000;
-		//SL = 1;
 		counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b1000;
-		//SL = 1;
-		counter_increment = 1;
-		end
-
         end
 
       s10 : begin //CH9 
 
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b1001;
-		//SL = 1;
 		counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b1001;
-		//SL = 1;
-		counter_increment = 1;
-
-		end		
 
         end
 
       s11 : begin //CH10 
 
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b1010;
-
 		counter_increment = 1;
-		end
-
-		else begin
-			SL = 0;
-		selection_bits = 4'b1010;
-
-		counter_increment = 1;
-		end
-	
 
         end
 
       s12 : begin //CH11 
 
+		selection_bits = 4'b1011;
+		counter_increment = 1;
 
-		if (counter_register == 4'b0000) begin
-			SL = 1;
-		selection_bits = 4'b1011;
-		counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b1011;
-		counter_increment = 1;
-		end
 	
         end
 
       s13 : begin //CH12 
 
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b1100;
 		counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b1100;
-		counter_increment = 1;
-		end
+
 
         end
 
       s14 : begin //CH13 
 
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b1101;
-		//SL = 1;
 		counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b1101;
-		//SL = 1;
-		counter_increment = 1;
-		end
+
 
         end
 
       s15 : begin //CH14 
 
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b1110;
-		//SL = 1;
 		counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b1110;
-		//SL = 1;
-		counter_increment = 1;
-		end
+
 
         end
 
       s16 : begin //CH15 
 
-		if (counter_register == 4'b0000) begin
-			SL = 1;
 		selection_bits = 4'b1111;
 		counter_increment = 1;
-		end
-		else begin
-			SL = 0;
-		selection_bits = 4'b1111;
-		counter_increment = 1;
-		end
 		
 
         end
@@ -361,7 +215,6 @@ end
       s17 : begin 
 		selection_bits = 4'b0000;
 		rst = 1;
-		SL = 0;
 		counter_reset = 1;
 		counter_increment = 0; 
 
@@ -369,7 +222,6 @@ end
 
       default : begin
 		rst = 0;
-		SL = 0;
 		counter_reset = 0;
 		counter_increment = 0; 
       end
@@ -537,6 +389,7 @@ end
         end
 
       s16 : begin //CH15 
+
           	if (counter_register == 4'b1011) begin  
                 	state_next = s17; 
             	end
@@ -547,6 +400,7 @@ end
 
       s17 : begin 
  		state_next = s0; 
+
         end
 
       default : begin
