@@ -400,6 +400,7 @@ end
 		rst = 1;
 		SL = 0;
 		counter_reset = 1;
+	        counter_increment = 0;
  		state_next = s0; 
 
         end
