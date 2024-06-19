@@ -5,19 +5,13 @@
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = tt_um_Coline3003_top.v top.v
+PROJECT_SOURCES = tt_um_Coline3003_top.v top.v FSM.v PISO_register.v channel_counter.v mux_16to1.v time_counter.v
 
 ifneq ($(GATES),yes)
 
 # RTL simulation:
 SIM_BUILD				= sim_build/rtl
 VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES))
-VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(FSM.v))
-VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PISO_register.v))
-VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(channel_counter.v))
-VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(mux_16to1.v))
-VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(time_counter.v))
-VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(top.v))
 COMPILE_ARGS 		+= -I$(SRC_DIR)
 
 else
