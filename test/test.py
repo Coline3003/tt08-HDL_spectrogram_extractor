@@ -27,7 +27,7 @@ async def test_project(dut):
 
     # Set the input values you want to test
     # set the RTC_clk to 3600 Hz to have a sending each second instead of each hour
-    clock = Clock(dut.dut.ui_in[0], 278, units="us")
+    clock = Clock(dut.ui_in[0], 278, units="us")
     #set values for channels 
     #channel 1 => 1Hz 
     dut.ui_in[1].value = Clock(dut.clk, 1, units="s")
