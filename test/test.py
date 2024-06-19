@@ -26,7 +26,8 @@ async def test_project(dut):
     dut._log.info("Test project behavior")
 
     # Set the input values you want to test
-    dut.ui_in[0].value = 1
+    # set the RTC_clk to 3600 Hz to have a sending each second insteag of each hour
+    dut.ui_in[0].value = Clock(dut.clk, 3600, units="Hz")
     dut.uio_in.value = 30
 
     # Wait for one clock cycle to see the output values
