@@ -12,7 +12,7 @@ always @(posedge clk) begin
     if(SL==1) begin
 	
 	register[11:0] = parallel_in[11:0];
-	serial_out <= register[0];
+	serial_out <= 1;
 	register = register >>> 1;
 
 
