@@ -17,7 +17,7 @@ async def test_project(dut):
     # Reset
     dut._log.info("Reset")
     dut.ena.value = 1
-    # dut.ui_in.value = 0
+    dut.ui_in.value = 0
     dut.uio_in.value = 0
     dut.rst_n.value = 0
     await ClockCycles(dut.clk, 10)
@@ -28,15 +28,20 @@ async def test_project(dut):
     # Set the input values you want to test
     # set the RTC_clk to 3600 Hz to have a sending each second instead of each hour
     RTC_clk = Clock(dut.ui_in[0], 278, units="us")
+    cocotb.start_soon(RTC_clk.start())
     #set values for channels 
     #channel 1 => 1Hz 
     ch1 = Clock(dut.ui_in[1], 1, units="sec")
+    cocotb.start_soon(ch1.start())
     #channel 2 => 2Hz 
     ch2 = Clock(dut.ui_in[2], 500, units="ms")
+    cocotb.start_soon(ch2.start())
     #channel 3 => 4Hz 
     ch3 = Clock(dut.ui_in[3], 250, units="ms")
+    cocotb.start_soon(ch3.start())
     #channel 4 => 8Hz 
     ch4 = Clock(dut.ui_in[4], 125, units="ms")
+    cocotb.start_soon(ch4.start())
     
     dut.uio_in.value = 30
 
