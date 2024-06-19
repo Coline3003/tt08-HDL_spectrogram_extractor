@@ -29,24 +29,60 @@ async def test_project(dut):
     # set the RTC_clk to 3600 Hz to have a sending each second instead of each hour
     RTC_clk = Clock(dut.ui_in[0], 278, units="us")
     cocotb.start_soon(RTC_clk.start())
+
+    # 1ms pause
+    await ClockCycles(dut.clk, 1000)
+    
     #set values for channels 
-    #channel 1 => 1Hz 
+    #channel 1 => 1 pulse 
     ch1 = Clock(dut.ui_in[1], 1, units="sec")
     cocotb.start_soon(ch1.start())
-    #channel 2 => 2Hz 
+    #channel 2 => 2 pulses 
     ch2 = Clock(dut.ui_in[2], 500, units="ms")
     cocotb.start_soon(ch2.start())
-    #channel 3 => 4Hz 
+    #channel 3 => 4 pulses 
     ch3 = Clock(dut.ui_in[3], 250, units="ms")
     cocotb.start_soon(ch3.start())
-    #channel 4 => 8Hz 
+    #channel 4 => 8 pulses 
     ch4 = Clock(dut.ui_in[4], 125, units="ms")
     cocotb.start_soon(ch4.start())
-    
-    dut.uio_in.value = 30
+    #channel 5 => 16 pulses 
+    ch5 = Clock(dut.ui_in[5], 125, units="ms")
+    cocotb.start_soon(ch5.start())
+    #channel 6 => 32 pulses 
+    ch6 = Clock(dut.ui_in[6], 62500, units="us")
+    cocotb.start_soon(c6.start())
+    #channel 7 => 64 pulses 
+    ch7 = Clock(dut.ui_in[7], 31250, units="us")
+    cocotb.start_soon(ch7.start())
+    #channel 8 => 128 pulses 
+    ch8 = Clock(dut.uio_in[0], 15625, units="us")
+    cocotb.start_soon(ch8.start())
+    #channel 9 => 256 pulses 
+    ch9 = Clock(dut.uio_in[1], 7812500, units="ns")
+    cocotb.start_soon(ch9.start())
+     #channel 10 => 512 pulses 
+    ch10 = Clock(dut.uio_in[2], 3906250, units="ns")
+    cocotb.start_soon(ch10.start())
+      #channel 11 => 1024 pulses 
+    ch11 = Clock(dut.uio_in[3], 1953125, units="ns")
+    cocotb.start_soon(ch11.start())
+     #channel 12 => 2048 pulses 
+    ch12 = Clock(dut.uio_in[4], 976562500, units="ps")
+    cocotb.start_soon(ch12.start())
+     #channel 13 => 2730 pulses (1010 1010 1010)b
+    ch13 = Clock(dut.uio_in[5], 366, units="us")
+    cocotb.start_soon(ch13.start())
+     #channel 14 => 240 pulses (0000 1111 0000)b
+    ch14 = Clock(dut.uio_in[6], 4167, units="us")
+    cocotb.start_soon(ch14.start())
+     #channel 15 => 4095 pulses (1111 1111 1111)b
+    ch15 = Clock(dut.uio_in[7], 244, units="us")
+    cocotb.start_soon(ch15.start())
+
 
     # Wait for one clock cycle to see the output values
-    await ClockCycles(dut.clk, 2000000)
+    await ClockCycles(dut.clk, 3500000)
 
     # The following assersion is just an example of how to check the output values.
     # Change it to match the actual expected output of your module:
