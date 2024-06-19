@@ -9,7 +9,7 @@ initial begin
 end
 
 //-- Sensitive to rising edge
-  always @(posedge clk or posedge reset or posedge rst_ovf) begin
+  always @(posedge clk or posedge reset) begin
   //-- Incrementar el registro
     if(reset == 1) begin
 	sec <= 6'b0;
