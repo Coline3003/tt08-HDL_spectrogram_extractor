@@ -12,14 +12,14 @@ always @(posedge clk) begin
     if(SL==1) begin
 	
 	register[11:0] = parallel_in[11:0];
-	serial_out <= 1;
+	serial_out = register[0];
 	register = register >>> 1;
 
 
 	       
     end
     else if (SL==0) begin
-	serial_out <= register[0];
+	serial_out = register[0];
         register = register >>> 1;
 	 // Output the least significant bit
     end
