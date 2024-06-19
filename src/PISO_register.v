@@ -11,7 +11,7 @@ module PISO_register(
 always @(posedge clk) begin
     if(SL==1) begin
 	
-	register[11:0] <= parallel_in[11:0];
+	register[11:0] = parallel_in[11:0];
 	serial_out <= register[0];
 	register <= register >>> 1;
 
