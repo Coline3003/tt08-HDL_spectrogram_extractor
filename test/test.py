@@ -26,12 +26,22 @@ async def test_project(dut):
     dut._log.info("Test project behavior")
 
     # Set the input values you want to test
-    # set the RTC_clk to 3600 Hz to have a sending each second insteag of each hour
-    dut.ui_in[0].value = Clock(dut.clk, 3600, units="Hz")
+    # set the RTC_clk to 3600 Hz to have a sending each second instead of each hour
+    dut.ui_in[0].value = Clock(dut.clk, 278, units="us")
+    #set values for channels 
+    #channel 1 => 1Hz 
+    dut.ui_in[1].value = Clock(dut.clk, 1, units="s")
+    #channel 2 => 2Hz 
+    dut.ui_in[2].value = Clock(dut.clk, 500, units="ms")
+    #channel 3 => 4Hz 
+    dut.ui_in[3].value = Clock(dut.clk, 250, units="ms")
+    #channel 4 => 8Hz 
+    dut.ui_in[4].value = Clock(dut.clk, 125, units="ms")
+    
     dut.uio_in.value = 30
 
     # Wait for one clock cycle to see the output values
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 200000)
 
     # The following assersion is just an example of how to check the output values.
     # Change it to match the actual expected output of your module:
