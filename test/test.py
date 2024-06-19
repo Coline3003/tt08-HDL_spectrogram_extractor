@@ -30,7 +30,7 @@ async def test_project(dut):
     RTC_clk = Clock(dut.ui_in[0], 278, units="us")
     #set values for channels 
     #channel 1 => 1Hz 
-    ch1 = Clock(dut.ui_in[1], 1, units="s")
+    ch1 = Clock(dut.ui_in[1], 1, units="sec")
     #channel 2 => 2Hz 
     ch2 = Clock(dut.ui_in[2], 500, units="ms")
     #channel 3 => 4Hz 
