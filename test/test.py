@@ -27,11 +27,9 @@ async def test_project(dut):
 
     # Set the input values you want to test
     # set the RTC_clk to 3600 Hz to have a sending each second instead of each hour
-    RTC_clk = Clock(dut.ui_in[0], 278, units="us")
+    RTC_clk = Clock(dut.ui_in[0], 277777778, units="ps")
     cocotb.start_soon(RTC_clk.start())
 
-    # 1ms pause
-    await ClockCycles(dut.clk, 1000)
     
     #set values for channels 
     #channel 1 => 1 pulse 
@@ -47,28 +45,28 @@ async def test_project(dut):
     ch4 = Clock(dut.ui_in[4], 125, units="ms")
     cocotb.start_soon(ch4.start())
     #channel 5 => 16 pulses 
-    ch5 = Clock(dut.ui_in[5], 125, units="ms")
+    ch5 = Clock(dut.ui_in[5], 62500, units="us")
     cocotb.start_soon(ch5.start())
     #channel 6 => 32 pulses 
-    ch6 = Clock(dut.ui_in[6], 62500, units="us")
+    ch6 = Clock(dut.ui_in[6],31250 , units="us")
     cocotb.start_soon(ch6.start())
     #channel 7 => 64 pulses 
-    ch7 = Clock(dut.ui_in[7], 31250, units="us")
+    ch7 = Clock(dut.ui_in[7],15625 , units="us")
     cocotb.start_soon(ch7.start())
     #channel 8 => 128 pulses 
-    ch8 = Clock(dut.uio_in[0], 15625, units="us")
+    ch8 = Clock(dut.uio_in[0],7812500 , units="ns")
     cocotb.start_soon(ch8.start())
     #channel 9 => 256 pulses 
-    ch9 = Clock(dut.uio_in[1], 7812500, units="ns")
+    ch9 = Clock(dut.uio_in[1], 3906250, units="ns")
     cocotb.start_soon(ch9.start())
      #channel 10 => 512 pulses 
-    ch10 = Clock(dut.uio_in[2], 3906250, units="ns")
+    ch10 = Clock(dut.uio_in[2], 1953125, units="ns")
     cocotb.start_soon(ch10.start())
       #channel 11 => 1024 pulses 
-    ch11 = Clock(dut.uio_in[3], 1953125, units="ns")
+    ch11 = Clock(dut.uio_in[3], 976562500, units="ps")
     cocotb.start_soon(ch11.start())
      #channel 12 => 2048 pulses 
-    ch12 = Clock(dut.uio_in[4], 976562500, units="ps")
+    ch12 = Clock(dut.uio_in[4],488281250 , units="ps")
     cocotb.start_soon(ch12.start())
      #channel 13 => 2730 pulses (1010 1010 1010)b
     ch13 = Clock(dut.uio_in[5], 366, units="us")
