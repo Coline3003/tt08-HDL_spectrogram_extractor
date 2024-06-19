@@ -75,7 +75,7 @@ async def test_project(dut):
     ch14 = Clock(dut.uio_in[6], 4167, units="us")
     cocotb.start_soon(ch14.start())
      #channel 15 => 4095 pulses (1111 1111 1111)b
-    ch15 = Clock(dut.uio_in[7], 244, units="us")
+    ch15 = Clock(dut.uio_in[7], 244201, units="ns")
     cocotb.start_soon(ch15.start())
 
 
