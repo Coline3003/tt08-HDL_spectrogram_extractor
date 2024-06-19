@@ -10,12 +10,15 @@ module channel_counter(input impulse, input reset, input enable, output reg [11:
 	data <= 12'b0;
 	ovf <= 0;	
     end
-    else if(impulse == 1) begin
-      data <= data + 1;
-      if(data == 4095) begin
-	ovf <= 1;
-	end
-    end
+    	else if(impulse == 1) begin
+		if (enable == 0) begin
+      			data <= data + 1;
+		end
+      		if(data == 4095) begin
+			ovf <= 1;
+		end
+    		
+	  end
   
   end
   
