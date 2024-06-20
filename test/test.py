@@ -72,7 +72,7 @@ async def test_project(dut):
     ch13 = Clock(dut.uio_in[5], 366300, units="ns")
     cocotb.start_soon(ch13.start())
      #channel 14 => 240 pulses (0000 1111 0000)b
-    ch14 = Clock(dut.uio_in[6], 4166667, units="ns")
+    ch14 = Clock(dut.uio_in[6], 4166666, units="ns")
     cocotb.start_soon(ch14.start())
      #channel 15 => 4095 pulses (1111 1111 1111)b
     ch15 = Clock(dut.uio_in[7], 244200, units="ns")
@@ -80,7 +80,16 @@ async def test_project(dut):
 
 
     # Wait for one clock cycle to see the output values
-    await ClockCycles(dut.clk, 1100000)
+    await ClockCycles(dut.clk,2100000)
+
+
+# test ovf channel
+
+     #channel 15 => 4096 pulses (1111 1111 1111)b
+    ch15 = Clock(dut.uio_in[7], 244, units="us")
+    cocotb.start_soon(ch15.start())
+
+await ClockCycles(dut.clk,1000000)
 
     # The following assersion is just an example of how to check the output values.
     # Change it to match the actual expected output of your module:
