@@ -83,13 +83,13 @@ async def test_project(dut):
     await ClockCycles(dut.clk,2100000)
 
 
-# test ovf channel
+    # test ovf channel
 
      #channel 15 => 4096 pulses (1111 1111 1111)b
     ch15 = Clock(dut.uio_in[7], 244, units="us")
     cocotb.start_soon(ch15.start())
 
-await ClockCycles(dut.clk,1000000)
+    await ClockCycles(dut.clk,1000000)
 
     # The following assersion is just an example of how to check the output values.
     # Change it to match the actual expected output of your module:
