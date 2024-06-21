@@ -1,9 +1,11 @@
-# clk : clock for the internal counter and the state change process
-# reset : when '1', reset the counter and return to state S0
-# ovf : when '1', allows to go from state s0 to s1 (starts the state machine and sending data)
-# selection_bits : output of the state machine, controls the multiplexer according to the output to send
-# SL : controls the PISO_regiter. When '1' Load, '0' shift
-# rst : reset all channel counters when the sending is over 
+/* 
+ clk : clock for the internal counter and the state change process
+ reset : when '1', reset the counter and return to state S0
+ ovf : when '1', allows to go from state s0 to s1 (starts the state machine and sending data)
+ selection_bits : output of the state machine, controls the multiplexer according to the output to send
+ SL : controls the PISO_regiter. When '1' Load, '0' shift
+ rst : reset all channel counters when the sending is over 
+*/
 
 module FSM(input clk, input reset, input wire ovf, output reg [3:0] selection_bits, output reg SL, output reg rst);
 
