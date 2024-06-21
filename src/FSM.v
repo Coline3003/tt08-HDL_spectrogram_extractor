@@ -10,6 +10,7 @@
 module FSM(input clk, input reset, input wire ovf, output reg [3:0] selection_bits, output reg SL, output reg rst);
 
   reg counter_increment;
+  reg [3:0] counter_register
   
   localparam [4:0]
   s0 = 0,
