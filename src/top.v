@@ -2,16 +2,14 @@
 //`include "FSM.v"
 //`include "time_counter.v"
 //`include "PISO_register.v"
-//`include "mux_5to1.v"
-//`include "ovf_detect.v"
+//`include "mux_16to1.v"
+
 
 module top(input clk, ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11, ch12, ch13, ch14, ch15, reset,RTC,
            output wire serial_out, ovf_global, ovf_RTC_out, a0_out, a1_out, a2_out, a3_out, SL_out
            );
 
 
-  wire [3:0] counter_register;
-  wire [11:0] PISO_register;
   wire [3:0] selection_bits;
   wire [11:0] data [15:0]; //RTC_counter = data[0], ch1_counter = data[1] etc...
   wire ovf1, ovf2, ovf3, ovf4, ovf5,ovf6,ovf7,ovf8,ovf9,ovf10,ovf11,ovf12,ovf13,ovf14,ovf15,ovf_RTC;
@@ -65,14 +63,14 @@ module top(input clk, ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11, c
 
 
   
-  FSM FSM1(.clk(clk),.reset(reset),.ovf(ovf_global),.selection(selection_bits),.SL_out(SL),.rst(out_rst),.counter_register(counter_register[3:0]))/* synthesis syn_noprune=1 */;
+           FSM FSM1(.clk(clk),.reset(reset),.ovf(ovf_global),.selection_bits(selection_bits),.SL(SL),.rst(out_rst))/* synthesis syn_noprune=1 */;
   
   mux_16to1 mux(.data0(data[0][11:0]),.data1(data[1][11:0]),.data2(data[2][11:0]),.data3(data[3][11:0]),.data4(data[4][11:0]),.data5(data[5][11:0]),
 .data6(data[6][11:0]),.data7(data[7][11:0]),.data8(data[8][11:0]),.data9(data[9][11:0]),.data10(data[10][11:0]),.data11(data[11][11:0]),.data12(data[12][11:0]),
 .data13(data[13][11:0]),.data14(data[14][11:0]),.data15(data[15][11:0]) ,.select(selection_bits[3:0]), .data_out(mux_data_out[11:0]));               
 
   
-  PISO_register PISO_register1(.clk(clk),.parallel_in(mux_data_out[11:0]),.SL(SL),.serial_out(serial_out),.register(PISO_register[11:0]));
+  PISO_register PISO_register1(.clk(clk),.parallel_in(mux_data_out[11:0]),.SL(SL),.serial_out(serial_out));
 
  
   
