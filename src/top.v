@@ -4,6 +4,17 @@
 //`include "PISO_register.v"
 //`include "mux_16to1.v"
 
+/*
+clk : clock for PISO_register and FSM
+RTC : clock for time counter
+ch1 to ch15 : cloks for channel counters
+reset : when ('1') reset all components 
+serial_out : main output, active periodically (when ovf_global is hight). serialization of counter values.
+ovf_global : hight if one channel overflow or if the time_counter reaches 59:59
+ovf_RTC_out : hight if the time_counter reaches 59:59
+a0_out to a3_out : selection bits of the MUX (use for debuging) 
+SL_out : Shift/load signal for PISO_register
+*/
 
 module top(input clk, ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11, ch12, ch13, ch14, ch15, reset,RTC,
            output wire serial_out, ovf_global, ovf_RTC_out, a0_out, a1_out, a2_out, a3_out, SL_out
@@ -18,7 +29,6 @@ module top(input clk, ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11, c
   wire out_rst; 
   wire  ovf_ch_out;
 
-  
   assign ovf_RTC_out = ovf_RTC;
   assign ovf_ch_out = ovf1||ovf2||ovf3||ovf4||ovf5||ovf6||ovf7||ovf8||ovf9||ovf10||ovf11||ovf12||ovf13||ovf14||ovf15;
   assign {a3_out, a2_out , a1_out, a0_out} = selection_bits[3:0];
@@ -63,7 +73,7 @@ module top(input clk, ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11, c
 
 
   
-           FSM FSM1(.clk(clk),.reset(reset),.ovf(ovf_global),.selection_bits(selection_bits),.SL(SL),.rst(out_rst))/* synthesis syn_noprune=1 */;
+FSM FSM1(.clk(clk),.reset(reset),.ovf(ovf_global),.selection_bits(selection_bits),.SL(SL),.rst(out_rst))/* synthesis syn_noprune=1 */;
   
   mux_16to1 mux(.data0(data[0][11:0]),.data1(data[1][11:0]),.data2(data[2][11:0]),.data3(data[3][11:0]),.data4(data[4][11:0]),.data5(data[5][11:0]),
 .data6(data[6][11:0]),.data7(data[7][11:0]),.data8(data[8][11:0]),.data9(data[9][11:0]),.data10(data[10][11:0]),.data11(data[11][11:0]),.data12(data[12][11:0]),
