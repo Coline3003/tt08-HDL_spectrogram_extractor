@@ -82,6 +82,33 @@ async def test_project(dut):
     # Wait to see the overflow
     await ClockCycles(dut.clk,500)
 
+    #second input signal
+    dut.ui_in[0].value = 1; #ch1(0)
+    dut.ui_in[1].value = 1; #ch1(1)
+    dut.ui_in[2].value = 1; #ch1(2)
+    dut.ui_in[3].value = 1; #ch1(3)
+    dut.ui_in[4].value = 1; #ch1(4)
+    dut.ui_in[5].value = 1; #ch1(5)
+    dut.ui_in[6].value = 0; #ch1(6)
+    for i in range(0, 7) :
+        dut.uio_in[i].value = 1;
+        # Wait 50 us
+        await ClockCycles(dut.clk,10)
+    for i in range(6, -1, -1) :
+        dut.uio_in[i].value = 0;
+        # Wait 50 us
+        await ClockCycles(dut.clk,10) 
+    dut.ui_in[0].value = 0; #ch1(0)
+    dut.ui_in[1].value = 0; #ch1(1)
+    dut.ui_in[2].value = 0; #ch1(2)
+    dut.ui_in[3].value = 0; #ch1(3)
+    dut.ui_in[4].value = 0; #ch1(4)
+    dut.ui_in[5].value = 0; #ch1(5)
+    dut.ui_in[6].value = 0; #ch1(6)
+
+    # Wait to see the overflow
+    await ClockCycles(dut.clk,1000)
+
     # The following assersion is just an example of how to check the output values.
     # Change it to match the actual expected output of your module:
     # assert dut.uo_out.value == 50
