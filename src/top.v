@@ -46,8 +46,8 @@ FSM fsm(.clk(serial_readout_clk),.reset(reset), .bank0_full(bank0_full), .bank1_
 	encoder enc2( .channel(ch2[6:0]), .channel_decode(data_decode[1][2:0]));
 
 	
-	memory mem1(.clk_write(acquisition_clk),.clk_read(serial_readout_clk),.write_enable(we), .address_in(addr_in[8:0]), .data_in(data_decode[0][2:0]), .read_enable(re), .address_out(addr_out[8:0]), .data_out(data_sent[0][2:0]));
-  	memory mem2(.clk_write(acquisition_clk),.clk_read(serial_readout_clk),.write_enable(we), .address_in(addr_in[8:0]), .data_in(data_decode[1][2:0]), .read_enable(re), .address_out(addr_out[8:0]), .data_out(data_sent[1][2:0]));
+	memory memory1(.clk_write(acquisition_clk),.clk_read(serial_readout_clk),.write_enable(we), .address_in(addr_in[8:0]), .data_in(data_decode[0][2:0]), .read_enable(re), .address_out(addr_out[8:0]), .data_out(data_sent[0][2:0]));
+  	memory memory2(.clk_write(acquisition_clk),.clk_read(serial_readout_clk),.write_enable(we), .address_in(addr_in[8:0]), .data_in(data_decode[1][2:0]), .read_enable(re), .address_out(addr_out[8:0]), .data_out(data_sent[1][2:0]));
 
 	PISO_register reg1(.clk(serial_readout_clk), .reset(reset), .SL(SL_ch), .parallel_in(data_sent[0][2:0]), .serial_out(PISO_ch1));
 	PISO_register reg2(.clk(serial_readout_clk),.reset(reset), .SL(SL_ch), .parallel_in(data_sent[1][2:0]), .serial_out(serial_out[1]));
