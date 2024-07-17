@@ -37,7 +37,7 @@ FSM fsm(.clk(serial_readout_clk),.reset(reset), .bank0_full(bank0_full), .bank1_
 	
 	//clk _activators
 	assign acquisition_clk_enable = memorization_completed || signal_detected || we || (state_reg_memctr != 0) ;
-	assign serial_readout_clk_enable = memorization_completed || serial_readout || acquisition_clk_enable || (state_regFSM != 0) ;
+	assign serial_readout_clk_enable = memorization_completed || serial_readout || acquisition_clk_enable || (state_reg_FSM != 0) ;
 	assign acquisition_clk = acquisition_clk_enable && input_acquisition_clk; 
 	assign serial_readout_clk = serial_readout_clk_enable && input_serial_readout_clk;
 	
