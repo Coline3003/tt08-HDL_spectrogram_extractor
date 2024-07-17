@@ -22,7 +22,7 @@ module tt_um_Coline3003_top(
 	     .SL_time(uo_out[2]), 
 	     .SL_ch(uo_out[3]), 
 	     .signal_detected(uo_out[4]), 
-             .memorizarion_completed(uo_out[5]), 
+             .memorization_completed(uo_out[5]), 
 	     .serial_readout(uo_out[6]), 
 	     .sending_data(uo_out[7]));
 	
