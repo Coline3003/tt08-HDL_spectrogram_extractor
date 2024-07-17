@@ -17,6 +17,7 @@ module top(
 	wire serial_readout_clk;
 	wire we, bank0_full, bank1_full, selection_bit, re, PISO_ch1, PISO_time;
 	wire [1:0] state_reg_memctr;
+	wire [2:0] state_reg_FSM;
 	//wire memorization_completed;
 
 
@@ -28,7 +29,7 @@ memory_controller mem_ctl(.clk(acquisition_clk), .reset(reset), .signal_detected
 
 FSM fsm(.clk(serial_readout_clk),.reset(reset), .bank0_full(bank0_full), .bank1_full(bank1_full), .memorization_completed(memorization_completed), .idx_final(idx_final[7:0]),
 		.addr_out(addr_out[8:0]), .SL_ch(SL_ch), .SL_time(SL_time), .selection_bit(selection_bit), 
-		.re(re), .serial_readout(serial_readout), .sending_data(sending_data));
+	.re(re), .serial_readout(serial_readout), .sending_data(sending_data), .state_reg(state_reg_FSM));
 
 		
 	//signal detector
@@ -36,7 +37,7 @@ FSM fsm(.clk(serial_readout_clk),.reset(reset), .bank0_full(bank0_full), .bank1_
 	
 	//clk _activators
 	assign acquisition_clk_enable = memorization_completed || signal_detected || we || (state_reg_memctr != 0) ;
-	assign serial_readout_clk_enable = memorization_completed || serial_readout || acquisition_clk_enable ;
+	assign serial_readout_clk_enable = memorization_completed || serial_readout || acquisition_clk_enable || (state_regFSM != 0) ;
 	assign acquisition_clk = acquisition_clk_enable && input_acquisition_clk; 
 	assign serial_readout_clk = serial_readout_clk_enable && input_serial_readout_clk;
 	
