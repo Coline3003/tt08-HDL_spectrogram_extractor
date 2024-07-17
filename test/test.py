@@ -93,11 +93,11 @@ async def test_project(dut):
     for i in range(0, 7) :
         dut.uio_in[i].value = 1;
         # Wait 50 us
-        await ClockCycles(dut.clk,10)
+        await ClockCycles(dut.clk,50)
     for i in range(6, -1, -1) :
         dut.uio_in[i].value = 0;
         # Wait 50 us
-        await ClockCycles(dut.clk,10) 
+        await ClockCycles(dut.clk,50) 
     dut.ui_in[0].value = 0; #ch1(0)
     dut.ui_in[1].value = 0; #ch1(1)
     dut.ui_in[2].value = 0; #ch1(2)
