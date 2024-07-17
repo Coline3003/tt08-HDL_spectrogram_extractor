@@ -53,6 +53,7 @@ always @(posedge clk or posedge reset) begin
 		cpt <= 0;
 		idx <= 0;
 		sending_data <= 0;
+		 read_bank <= 0;
 	end
 	else begin
 	case (state_reg)
@@ -63,6 +64,7 @@ always @(posedge clk or posedge reset) begin
 			sending_data <= 0;
 		end
 		s1 : begin //load of RTC
+			
 			cpt <= 0;
 			idx <= 0;
 			sending_data <= 1;
@@ -96,6 +98,10 @@ always @(posedge clk or posedge reset) begin
 				idx <= 0;
 			end
 			
+			if(state_next == s5) begin
+				read_bank <= ~read_bank;
+			end
+			
 			// if memory has been completely read => disable reading
 			if((idx==200 && sending_pending == 1 && cpt == 0) || (idx==200 && sending_pending == 0)) begin
 				re <= 0;
@@ -127,10 +133,15 @@ always @(posedge clk or posedge reset) begin
 		s7 : begin//shift of memory data (in case of reading part of memory)
 			cpt <= cpt + 1; //counter increment
 			
+			if(state_next == s0) begin
+				read_bank <= ~read_bank;
+			end
+			
 			//reset idx counter when the reading address reaches the final address
 			if(idx == reg_idx_final  && cpt == 2) begin
 				idx <= 0;
 				sending_data <= 0;
+				
 			end
 			
 			if(idx == reg_idx_final) begin //when reaching final address => disable reading
@@ -176,7 +187,7 @@ always @(posedge clk or posedge reset) begin
 		end
 	end                                                                   
 end
-
+/*
 //asynchonous process for changing bank, when a sending starts => changing the bank to read into
 always @(posedge sending_started or posedge reset) begin
 	if(reset) begin
@@ -186,7 +197,7 @@ always @(posedge sending_started or posedge reset) begin
 		read_bank <= ~read_bank;
 	end
 end
-
+*/
 
 //combinatory outputs of the state machine
 //sending_started => pulse when we start to read memory 
