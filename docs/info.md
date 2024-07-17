@@ -9,12 +9,5 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Design consists of fifteen 12-bit counters with overflow detection, a mm:ss real-time clock (RTC), a parallel-input-serial output (PISO) readout register, controlled by a readout state-machine. The counters store number of intermittently-occuring short digital input pulses, accumulated within the RTC's time-measurement interval 00:00 - 59:59, at each of the four input channels. Periodically, after every RTC overflow (1 h with assumed 1 Hz RTC input clock signal), the state-machine performs sequential serial readout of the RTC time and all channels, and resets all channel counters. Additionally, readout and individual channel reset is initiated by overflow at any of individual input channel counter. This an early work-in progress implementation of digital portion of a low-power sensor interface for readout of a multichannel acoustic emission detector, based on MEMS-array of piezoelectric microresonators for passive ultrasonic band-pass filtering: https://ieeexplore.ieee.org/document/9139151. Design is generally applicable for low-power wake-up sensor interfaces, acoustic event detection, non-destructive testing, particle-counters, or as a generic pulse-counting digital building block.
+The inputs of the device are the outputs of an analog processing and we therefore have 7 signals per channel representing the amplitude of the emission at the frequency associated with the channel. This data is encoded and upon detection of a signal, memorization is triggered. It lasts 200 us and once it is finished the state machine controls it and sends the recorded data. To manage recording and sending simultaneously, we use the double buffer technique. We write in one part of the memory and read the data recorded in the other. This data is sent serially for each channel. An RTC module allows you to retrieve the time of appearance of the pulse. In fact it is recorded in a register when a input signal is detected and this is the firt data to be sent.
 
-## How to test
-
-Input signals are short rising-edge digital pulses, connected to input pins "channel 1" to "channel 15" . Output data becomes ready for serial readout at the output pin "serial_out" when overflow is signalled via the output "ready" pin ovf_global. Output bits are serially clocked-out using the input pin "clk". Specifically, RTC overflow is signalled via output pin "ovf_RTC_out", and overflow at an individual channel via the pin "ovf_ch_out". The rest of output pins are used for debugging of the state-machine's internal states.
-
-## External hardware
-
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
