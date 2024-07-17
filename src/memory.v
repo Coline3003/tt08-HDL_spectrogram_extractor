@@ -13,7 +13,7 @@ module memory(
 
 initial begin
 
-	data_out = 8'b0;
+	data_out = 3'b0;
 end
 	//assign mem1_test = mem1[0];
 	//assign mem2_test = mem2[0];
