@@ -7,11 +7,11 @@ module RTC(input clk, input reset, output reg [5:0] sec, output reg [9:0] millis
   always @(posedge clk or posedge reset) begin
   //-- Incrementar el registro
     if(reset == 1) begin
-  	millisec = 10'b0;
-  	sec = 6'b0;
-  	min = 6'b0;
-  	hour = 5'b0;
-  	day = 5'b0;
+  	millisec <= 10'b0;
+  	sec <= 6'b0;
+  	min <= 6'b0;
+  	hour <= 5'b0;
+  	day <= 5'b0;
     end
     else begin
 
