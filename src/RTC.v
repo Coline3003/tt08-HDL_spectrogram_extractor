@@ -1,15 +1,7 @@
 module RTC(input clk, input reset, output reg [5:0] sec, output reg [9:0] millisec,
                output reg [5:0] min, output reg [4:0] hour, output reg [4:0] day);
 
-    
-//-- Output is 26-bit bus, initialized at 0
-initial begin
-  millisec = 10'b0;
-  sec = 6'b0;
-  min = 6'b0;
-  hour = 5'b0;
-  day = 5'b0;
-end
+
 
 //-- Sensitive to rising edge
   always @(posedge clk or posedge reset) begin
