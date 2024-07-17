@@ -64,13 +64,13 @@ async def test_project(dut):
     dut.ui_in[5].value = 0; #ch1(5)
     dut.ui_in[6].value = 0; #ch1(6)
     for i in range(0, 7) :
-             dut.uio_in[i].value = 1;
-             # Wait 10 us
-              await ClockCycles(dut.clk,10)
+        dut.uio_in[i].value = 1;
+        # Wait 10 us
+        await ClockCycles(dut.clk,10)
     for i in range(6, -1, -1) :
-             dut.uio_in[i].value = 0;
-             # Wait 10 us
-              await ClockCycles(dut.clk,10) 
+        dut.uio_in[i].value = 0;
+        # Wait 10 us
+        await ClockCycles(dut.clk,10) 
 
 
     # Wait to see the overflow
